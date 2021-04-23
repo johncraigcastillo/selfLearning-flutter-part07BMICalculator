@@ -1,5 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'card_container.dart';
+import 'sex_icon_and_text.dart';
+
+/// Color of the main containers
+const Color activeContainerColor = Color(0xFF323244);
+
+/// Font color for unselected text
+const Color inactiveFontColor = Color(0xFF8D8E98);
+
+/// Bottom container color
+const Color bottomContainerColor = Color(0xFFE83D66);
+
+/// Height of the bottom container
+const double bottomContainerHeight = 60;
 
 ///The input page for our BMI
 class InputPage extends StatefulWidget {
@@ -15,49 +31,64 @@ class _InputPageState extends State<InputPage> {
         title: const Text('BMI Calculator'),
       ),
       body: Column(
-        children: [
+        children: <Widget>[
           Expanded(
+            flex: 3,
             child: Row(
               children: const <Expanded>[
                 Expanded(
-                  child: BuildContainer(),
+                  child: CardContainer(
+                    color: activeContainerColor,
+                    child: SexIconAndText(
+                      icon: FontAwesomeIcons.mars,
+                      text: 'MALE',
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: BuildContainer(),
+                  child: CardContainer(
+                    color: activeContainerColor,
+                    child: SexIconAndText(
+                      icon: FontAwesomeIcons.venus,
+                      text: 'FEMALE',
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           const Expanded(
-            child: BuildContainer(),
+            flex: 3,
+            child: CardContainer(
+              color: activeContainerColor,
+            ),
           ),
           Expanded(
+            flex: 3,
             child: Row(
               children: const <Expanded>[
                 Expanded(
-                  child: BuildContainer(),
+                  child: CardContainer(
+                    color: activeContainerColor,
+                  ),
                 ),
                 Expanded(
-                  child: BuildContainer(),
+                  child: CardContainer(
+                    color: activeContainerColor,
+                  ),
                 ),
               ],
             ),
           ),
+          Container(
+            color: bottomContainerColor,
+            margin: const EdgeInsets.only(
+              top: 10,
+            ),
+            height: bottomContainerHeight,
+            width: double.infinity,
+          ),
         ],
-      ),
-    );
-  }
-}
-
-///Builds the lighter containers on the input_page
-class BuildContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: const Color(0xFF323244),
-        borderRadius: BorderRadius.circular(15),
       ),
     );
   }
