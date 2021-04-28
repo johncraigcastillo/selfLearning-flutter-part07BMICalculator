@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'input_page.dart';
 
-///Style of the text in SexIconAndText widget
-const TextStyle textStyle = TextStyle(
-  fontSize: 23,
-  color: inactiveFontColor,
-);
+import 'constants.dart';
 
 /// SexIconAndText widget used inside CardContainer
 class SexIconAndText extends StatelessWidget {
@@ -35,7 +30,7 @@ class SexIconAndText extends StatelessWidget {
         ),
         Text(
           text,
-          style: textStyle,
+          style: kLabelTextStyle,
         ),
       ],
     );
