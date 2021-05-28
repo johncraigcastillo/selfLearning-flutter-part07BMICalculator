@@ -227,15 +227,41 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: kBottomContainerColor,
-            margin: const EdgeInsets.only(
-              top: 10,
-            ),
-            height: kBottomContainerHeight,
-            width: double.infinity,
-          ),
+          BottomButton(),
         ],
+      ),
+    );
+  }
+}
+
+class BottomButton extends StatelessWidget {
+  /// Constructor for BottomButton
+  const BottomButton({required this.onTap, required this.buttonTitle});
+
+  final Function onTap;
+  final String buttonTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/results');
+      },
+      child: Container(
+        color: kBottomContainerColor,
+        margin: const EdgeInsets.only(
+          top: 10,
+        ),
+        height: kBottomContainerHeight,
+        width: double.infinity,
+        child: Center(
+          child: Text(
+            'CALCULATE',
+            style: kNumberTextStyle.copyWith(
+              fontSize: 25,
+            ),
+          ),
+        ),
       ),
     );
   }
