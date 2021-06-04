@@ -1,10 +1,14 @@
+import 'package:bmi_calculator/screens/results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'card_container.dart';
-import 'constants.dart';
-import 'sex_icon_and_text.dart';
+import '../components/bottom_button.dart';
+import '../components/card_container.dart';
+import '../components/rounded_button.dart';
+import '../components/sex_icon_and_text.dart';
+import '../constants.dart';
+import '../components/calculator_brain.dart';
 
 /// Holds the sex types
 enum Sex {
@@ -28,9 +32,7 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BMI Calculator'),
-      ),
+      appBar: AppBar(title: const Text('BMI Calculator')),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -227,69 +229,26 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          BottomButton(),
+          BottomButton(
+            onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+              calc.getResult();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    bmiResult: calc.calculateBMI(),
+                    resultText: calc.getResult(),
+                    interpretation: calc.getInterpretation(),
+                  ),
+                ),
+              );
+            },
+            buttonTitle: 'CALCULATE',
+          ),
         ],
       ),
-    );
-  }
-}
-
-class BottomButton extends StatelessWidget {
-  /// Constructor for BottomButton
-  const BottomButton({required this.onTap, required this.buttonTitle});
-
-  final Function onTap;
-  final String buttonTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/results');
-      },
-      child: Container(
-        color: kBottomContainerColor,
-        margin: const EdgeInsets.only(
-          top: 10,
-        ),
-        height: kBottomContainerHeight,
-        width: double.infinity,
-        child: Center(
-          child: Text(
-            'CALCULATE',
-            style: kNumberTextStyle.copyWith(
-              fontSize: 25,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// RoundIconButton is a custom button widget with an icon
-class RoundIconButton extends StatelessWidget {
-  /// Constructs the RoundIconButton with a child
-  const RoundIconButton({required this.icon, required this.onPressed});
-
-  /// Function passed into RoundIconButton
-  final Function()? onPressed;
-
-  /// Icon widget passed into RoundIconButton
-  final Icon? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      elevation: 0,
-      constraints: const BoxConstraints.tightFor(
-        width: 50,
-        height: 50,
-      ),
-      onPressed: onPressed,
-      shape: const CircleBorder(),
-      fillColor: const Color(0xFF4C4F5E),
-      child: icon,
     );
   }
 }
